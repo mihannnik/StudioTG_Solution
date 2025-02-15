@@ -24,11 +24,11 @@ namespace StudioTG.Infrastructure.Repositories
 
         public Field Read(Guid Id)
         {
-            if (Fields.TryGetValue(Id, out Field field))
+            if (Fields.TryGetValue(Id, out var field))
             {
                 return field;
             }
-            throw new KeyNotFoundException(message: $"No field with id {Id.ToString()}");
+            throw new KeyNotFoundException($"No field with id {Id}");
         }
 
         public void Delete(Guid Id)
@@ -39,8 +39,10 @@ namespace StudioTG.Infrastructure.Repositories
 
         public void Update(Field field)
         {
-            if (Fields.ContainsKey(field.Id)) Fields[field.Id] = field;
-            throw new KeyNotFoundException(message: $"No field with id {field.Id.ToString()}");
+            if (!Fields.TryUpdate(field.Id, field, Fields[field.Id]))
+            {
+                throw new KeyNotFoundException($"No field with id {field.Id}");
+            }
         }
     }
 }
