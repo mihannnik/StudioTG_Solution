@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  studiotg.web:
+    image: ${DOCKER_REGISTRY-}studiotgweb
+    build:
+      context: .
+      dockerfile: studiotg/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_URLS=${HTTP_URL}:8080
+      - FieldOptions__MaxWidth=${FieldOptions_MaxWidth}
+      - FieldOptions__MaxHeight=${FieldOptions_MaxHeight}
+    ports:
+      - "${HTTP_PORT}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 3s
