@@ -2,10 +2,10 @@ version: '3.4'
 
 services:
   studiotg.web:
-    image: ${DOCKER_REGISTRY-}studiotgweb
+    image: ${DOCKER_REGISTRY-}studiotg
     build:
       context: .
-      dockerfile: studiotg/Dockerfile
+      dockerfile: src/StudioTG.Web/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=${HTTP_URL}:8080
